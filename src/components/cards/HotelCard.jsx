@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { BiBed } from 'react-icons/bi';
 import { BiCalendarAlt } from 'react-icons/bi';
 import { GoLocation } from 'react-icons/go';
+import { diffDays } from '../../actions/hotels';
 
 const HotelCard = ({ hotel }) => {
   return (
@@ -18,13 +19,16 @@ const HotelCard = ({ hotel }) => {
         </Card.Text>
         <Card.Text className="mb-2">
           <BiCalendarAlt />
-          for 7 days
+          for {diffDays(hotel.from, hotel.to)}{' '}
+          {diffDays(hotel.from, hotel.to) <= 1 ? ' day' : ' days'}
         </Card.Text>
         <Card.Text className="mb-2">
           <BiBed /> {hotel.bed} bed
         </Card.Text>
         <Card.Text className="text-muted ">
-          <small>Available from 10/19/2022</small>
+          <small>
+            Available from {new Date(hotel.from).toLocaleDateString()}
+          </small>
         </Card.Text>
       </Card.Body>
     </Card>

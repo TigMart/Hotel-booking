@@ -10,6 +10,7 @@ import Register from './pages/auth/Register';
 import SingleHotel from './components/hotels/SingleHotel';
 import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/hotels/:id" element={<SingleHotel />} />
         <Route path="*" element={<Error />} />
       </Routes>
+      <Footer />
     </>
   );
 };
