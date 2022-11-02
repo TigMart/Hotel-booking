@@ -1,5 +1,15 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 .vh-85 {
   height: 85vh;
+}
+
+.top-30 {
+  top: 30px;
+}
+
+.vh-50 {
+  height: 50vh;
 }
 
 .footer {

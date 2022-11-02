@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { allHotels } from '../actions/hotels';
-import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
 import HotelCard from '../components/cards/HotelCard';
+import Col from 'react-bootstrap/Col';
 
 const Hotels = () => {
-  const [hotels, setHotels] = useState([]);
+  const [hotels, setHotels] = useState('');
 
   const getAllHotels = async () => {
     try {

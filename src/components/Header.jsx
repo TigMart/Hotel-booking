@@ -1,10 +1,14 @@
-import { NavDropdown } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
+// Bootstrap
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavDropdown } from 'react-bootstrap';
+
 import logo from '/logo.webp';
+
 const Header = () => {
   const { auth } = useSelector((state) => ({ ...state }));
   const navigate = useNavigate();
@@ -34,14 +38,17 @@ const Header = () => {
             </Link>
             {auth && auth.token ? (
               <NavDropdown title={auth.user.name}>
+                <NavDropdown.Item as={Link} to="/dashboard">
+                  Dashboard
+                </NavDropdown.Item>
                 <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
               </NavDropdown>
             ) : (
               <>
-                <Link to="login" className="nav-link">
+                <Link to="/login" className="nav-link">
                   Login
                 </Link>
-                <Link to="register" className="nav-link">
+                <Link to="/register" className="nav-link">
                   Register
                 </Link>
               </>

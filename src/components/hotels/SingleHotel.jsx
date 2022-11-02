@@ -10,14 +10,9 @@ const SingleHotel = () => {
   const [hotel, setHotel] = useState({});
   const params = useParams();
 
-  useEffect(() => {
-    getSingleHotel();
-  }, []);
-
   const getSingleHotel = async () => {
     try {
       const res = await getHotelById(params.id);
-      console.log(res);
       if (res.data) {
         setHotel(res.data);
       }
@@ -26,19 +21,23 @@ const SingleHotel = () => {
     }
   };
 
+  useEffect(() => {
+    getSingleHotel();
+  }, []);
+
   return (
     <>
       {Object.keys(hotel).length && (
         <Container className="mt-4">
           <Row>
-            <Col className="md-6">
+            <Col md={6}>
               <img
-                className="w-100"
                 src={`${import.meta.env.VITE_APP_API}/hotel/image/${params.id}`}
                 alt={hotel.title}
+                className="w-100 position-sticky top-30"
               />
             </Col>
-            <Col className="md-6">
+            <Col md={6}>
               <h2>{hotel.title}</h2>
               <p>{hotel.content}</p>
               <p>
@@ -54,9 +53,7 @@ const SingleHotel = () => {
                 <BiBed />
                 {hotel.bed}
               </p>
-              <small>
-                Available from {new Date(hotel.from).toLocaleDateString()}
-              </small>
+              <p>Available from {new Date(hotel.from).toLocaleDateString()}</p>
             </Col>
           </Row>
         </Container>

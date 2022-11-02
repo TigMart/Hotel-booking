@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
+
 import App from './App';
 
 // CSS And Bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'antd/dist/antd.css';
 
 //  redux and react redux
 import { createStore } from 'redux';

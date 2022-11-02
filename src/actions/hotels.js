@@ -11,5 +11,14 @@ export const diffDays = (from, to) => {
   return difference;
 };
 
+const config = {};
+
 export const getHotelById = async (hotelId) =>
   await axios.get(`${import.meta.env.VITE_APP_API}/hotel/${hotelId}`);
+
+export const sellerHotels = async (token) =>
+  await axios.get(`${import.meta.env.VITE_APP_API}/seller-hotels`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { register } from "../../actions/auth/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
