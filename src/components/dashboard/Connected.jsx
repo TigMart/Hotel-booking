@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { sellerHotels } from '../../actions/hotels';
+import HotelCard from '../cards/HotelCard';
 
 const Connected = () => {
   const { auth } = useSelector((state) => ({ ...state }));
@@ -30,7 +31,7 @@ const Connected = () => {
       <Row className="mt-4">
         <Col
           md={12}
-          className="d-flex justify-content-between align-items-center"
+          className="mb-4 d-flex justify-content-between align-items-center"
         >
           <h3 className="mb-0">Your hotels</h3>
           <Link to="/hotels/new" className="btn btn-primary">
@@ -38,9 +39,26 @@ const Connected = () => {
           </Link>
         </Col>
       </Row>
-      <div className="d-flex justify-content-center align-items-center vh-50">
-        <h4 className="text-muted">No Hotels Found!</h4>
-      </div>
+      <Container>
+        <Row>
+          {hotels && hotels.length ? (
+            hotels.map((hotel) => {
+              return (
+                <Col key={hotel._id} md={3}>
+                  <Link
+                    to={`/hotels/${hotel._id}`}
+                    className="text-decoration-none text-dark"
+                  >
+                    <HotelCard hotel={hotel} />
+                  </Link>
+                </Col>
+              );
+            })
+          ) : (
+            <div>No Hotels</div>
+          )}
+        </Row>
+      </Container>
     </>
   );
 };

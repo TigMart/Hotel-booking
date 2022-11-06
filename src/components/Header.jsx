@@ -38,7 +38,7 @@ const Header = () => {
             </Link>
             {auth && auth.token ? (
               <NavDropdown title={auth.user.name}>
-                <NavDropdown.Item as={Link} to="/dashboard">
+                <NavDropdown.Item as={Link} to="/dashboard/bookings">
                   Dashboard
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>

@@ -22,3 +22,11 @@ export const sellerHotels = async (token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const craeteHotels = async (token, formData) =>
+  await axios.post(`${import.meta.env.VITE_APP_API}/create-hotels`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    formData,
+  });
