@@ -1,30 +1,34 @@
-import { useState } from "react";
-import { Container } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { register } from "../../actions/auth/auth";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { register } from '../../actions/auth/auth';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const registerHandler = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const response = await register({ name, email, password });
-      toast.success("successfully registered");
+      toast.success('successfully registered');
       setTimeout(() => {
-        navigate("/login");
+        navigate('/login');
       }, 1000);
     } catch (err) {
       toast.error(err.response.data);
+      setLoading(false);
     }
   };
 
@@ -59,13 +63,16 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={loading}>
+              {loading && (
+                <Spinner animation="border" className="spinner-custom" />
+              )}
               Sign up
             </Button>
             <p className="mt-3">
               <small className="text-muted">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-                ducimus?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptas, ducimus?
               </small>
             </p>
           </Form>

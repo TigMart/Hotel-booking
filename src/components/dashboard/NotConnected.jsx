@@ -2,28 +2,25 @@ import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { BiHomeAlt } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { createConnectAccount } from '../../actions/stripe';
 
 const NotConnected = () => {
   // Will be deleted
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => ({ ...state }));
 
-
   const [loading, setLoading] = useState(false);
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     setLoading(true);
-    
-    setTimeout(() => {
-      const authTemp = { ...auth };
-      authTemp.user.stripe_seller = { charges_enabled: true };
-      window.localStorage.setItem('auth', JSON.stringify(authTemp));
-      dispatch({
-        type: 'LOGGED_IN_USER',
-        payload: authTemp,
-      });
+    try {
+      let res = await createConnectAccount(auth.token);
+      window.location.href = res.data;
+    } catch (err) {
+      toast.error('Stripe connect failed, Try again.');
       setLoading(false);
-    }, 1500);
+    }
   };
   return (
     <Container fluid>

@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { toast } from 'react-toastify';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,8 +17,10 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const loginHandler = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -34,6 +37,7 @@ const Login = () => {
       }
     } catch (err) {
       toast.error(err.response.data);
+      setLoading(false);
     }
   };
 
@@ -43,8 +47,7 @@ const Login = () => {
         <Col md={{ span: 4, offset: 4 }} className="mt-4">
           <div className="h3">Welcome</div>
           <p className="text-muted">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio,
-            explicabo.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </p>
           <Form onSubmit={loginHandler}>
             <Form.Group className="mb-3">
@@ -65,7 +68,10 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={loading}>
+              {loading && (
+                <Spinner animation="border" classname="spinner-custom" />
+              )}
               Sign in
             </Button>
             <p className="mt-4">

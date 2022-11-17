@@ -4,8 +4,20 @@ import { BiCalendarAlt } from 'react-icons/bi';
 import { GoLocation } from 'react-icons/go';
 import { diffDays } from '../../actions/hotels';
 import moment from 'moment/moment';
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router';
 
-const HotelCard = ({ hotel }) => {
+const HotelCard = ({ hotel, isOwner = false, setSmShow, setId }) => {
+  const navigate = useNavigate();
+  const navigateToEdit = (e) => {
+    e.preventDefault();
+    navigate('/hotels/edit', { state: { hotel } });
+  };
+  const openDeleteModal = (e) => {
+    e.preventDefault();
+    setSmShow(true);
+    setId(hotel._id);
+  };
   return (
     <Card className="mb-4">
       <Card.Img
@@ -36,6 +48,16 @@ const HotelCard = ({ hotel }) => {
             <i>Posted {moment(hotel.createdAt).fromNow()}</i>
           </small>
         </Card.Text>
+        {isOwner && (
+          <div className="d-grid gap-2">
+            <Button variant="warning" onClick={navigateToEdit}>
+              Edit
+            </Button>
+            <Button variant="danger" onClick={openDeleteModal}>
+              Delete
+            </Button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import { useState } from 'react';
-import Tab from 'react-bootstrap/Tab';
 
 const DashboardTabs = () => {
   const params = useLocation();

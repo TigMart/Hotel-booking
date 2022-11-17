@@ -4,13 +4,17 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { sellerHotels } from '../../actions/hotels';
+import { deleteHotel, sellerHotels } from '../../actions/hotels';
 import HotelCard from '../cards/HotelCard';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const Connected = () => {
   const { auth } = useSelector((state) => ({ ...state }));
   const { token } = auth;
   const [hotels, setHotels] = useState([]);
+  const [smShow, setSmShow] = useState(false);
+  const [id, setId] = useState(null);
 
   const getSellerHotels = async () => {
     try {
@@ -22,6 +26,18 @@ const Connected = () => {
       toast.error(err.response.data);
     }
   };
+
+  const deleteHandler = async () => {
+    try {
+      const res = await deleteHotel(token, id);
+      toast.success('Hotel delted successfully! 🔥');
+      setSmShow(false);
+      getSellerHotels();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getSellerHotels();
   }, []);
@@ -49,16 +65,41 @@ const Connected = () => {
                     to={`/hotels/${hotel._id}`}
                     className="text-decoration-none text-dark"
                   >
-                    <HotelCard hotel={hotel} />
+                    <HotelCard
+                      hotel={hotel}
+                      isOwner={true}
+                      setSmShow={setSmShow}
+                      setId={setId}
+                    />
                   </Link>
                 </Col>
               );
             })
           ) : (
-            <div>No Hotels</div>
+            <h4 className="text-muted"> :( No Hotels Found!</h4>
           )}
         </Row>
       </Container>
+      <Modal
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Are you sure?
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setSmShow(false)}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={deleteHandler}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

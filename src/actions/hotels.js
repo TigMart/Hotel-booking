@@ -11,8 +11,6 @@ export const diffDays = (from, to) => {
   return difference;
 };
 
-const config = {};
-
 export const getHotelById = async (hotelId) =>
   await axios.get(`${import.meta.env.VITE_APP_API}/hotel/${hotelId}`);
 
@@ -23,10 +21,33 @@ export const sellerHotels = async (token) =>
     },
   });
 
-export const craeteHotels = async (token, formData) =>
-  await axios.post(`${import.meta.env.VITE_APP_API}/create-hotels`, {
+export const createHotel = async (token, data) =>
+  await axios.post(`${import.meta.env.VITE_APP_API}/create-hotel`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    formData,
   });
+
+export const updateHotel = async (token, data, hotelId) =>
+  await axios.put(
+    `${import.meta.env.VITE_APP_API}/update-hotel/${hotelId}`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+export const deleteHotel = async (token, hotelId) =>
+  await axios.delete(
+    `${import.meta.env.VITE_APP_API}/delete-hotel/${hotelId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+export const searchListings = async (query) =>
+  await axios.post(`${import.meta.env.VITE_APP_API}/search-listings`, query);

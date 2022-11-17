@@ -14,16 +14,21 @@ import Footer from './components/Footer';
 import Seller from './components/Seller';
 import Bookings from './components/Bookings';
 import AddHotel from './components/hotels/AddHotel';
+import EditHotel from './components/hotels/EditHotel';
+import SearchResult from './pages/SearchResult';
+import StripeCallback from './components/stripe/StripeCallback';
 
 const App = () => {
   return (
     <>
       <ToastContainer />
+
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route
           path="/dashboard"
           element={
@@ -58,8 +63,27 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/hotels/edit"
+          element={
+            <PrivateRoute>
+              <EditHotel />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/search-result" element={<SearchResult />} />
+        <Route
+          path="/stripe/callback"
+          element={
+            <PrivateRoute>
+              <StripeCallback />
+            </PrivateRoute>
+          }
+        />
+
         <Route path="*" element={<Error />} />
       </Routes>
+
       <Footer />
     </>
   );
